@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script>
-    let path = location.pathname;
-    let path_string = "";
-    path_string += path;
-    path_string += "styles/style.css";
-    console.log(location.origin);
-    document.getElementById("redirect").href=path_string;
-    </script>
-    <link class="redirect" rel="stylesheet"/>
+    <link id="cssRef" rel="stylesheet" href="styles/style.css"/>
     <title> Mainpage </title>
   </head>
   <body
