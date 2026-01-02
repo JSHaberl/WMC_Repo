@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+	<script>
+		let buttonPressed;
+		function redirect(buttonPressed) {
+			if (buttonPressed == null) {
+			}
+			else {
+				document.getElementById("redirect").content = "0; url=" + buttonPressed + "/index.html";
+			}
+		}
+	</script>
+	<meta id="redirect" http-equiv="refresh"/>
     <link id="cssRef" rel="stylesheet" href="styles/style.css"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title> Mainpage </title>
@@ -15,6 +26,17 @@
 				<a href="gamepage/index.html"> Gamepage  </a>
 			</li>
 		</ul>
+		<form>
+			<ul class="buttonList">
+				<li>
+					<input type="radio" id="button1" name="redirect" onclick="buttonPressed = 'page1'"> Page 1 </input>
+				</li>
+				<li>
+					<input type="radio" id="button2" name="redirect" onclick="buttonPressed = 'gamepage'"> Gamepage </input>
+				</li>
+			</ul>
+		</form>
+		<input type="button" value="Confirm" id="confirm" name="redirectConfirm" onclick="redirect(buttonPressed)"></input>
 	</div>
 	<div class="site">
 		<p class="test"> Hier könnte Ihre Werbung stehen! </p>

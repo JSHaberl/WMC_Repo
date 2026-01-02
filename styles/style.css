@@ -35,6 +35,14 @@
  .sidebar ul {
 	margin-top: 100px;
  }
+ 
+ .buttonList {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+ }
+ .buttonCovered {
+ }
 
 div.site {
 	margin-left: 200px;
