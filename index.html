@@ -1,16 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-	<script>
-		let buttonPressed;
-		function redirect(buttonPressed) {
-			if (buttonPressed == null) {
-			}
-			else {
-				document.getElementById("redirect").content = "0; url=" + buttonPressed + "/index.html";
-			}
-		}
-	</script>
+	<script src="javascript/func.js"></script>
 	<meta id="redirect" http-equiv="refresh"/>
     <link id="cssRef" rel="stylesheet" href="styles/style.css"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,8 +30,8 @@
 		<input type="button" value="Confirm" id="confirm" name="redirectConfirm" onclick="redirect(buttonPressed)"></input>
 	</div>
 	<div class="site">
-		<p class="test"> Hier könnte Ihre Werbung stehen! </p>
-		<p class="test"> Hier könnte noch mehr Werbung stehen! </p>
+		<p> Hier könnte Ihre Werbung stehen! </p>
+		<p> Hier könnte noch mehr Werbung stehen! </p>
 	</div>
   </body>
 </html>

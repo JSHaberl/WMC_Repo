@@ -1,19 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<script src="../javascript/func.js"></script>
 		<meta id="redirect" http-equiv="refresh"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="../styles/style.css"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<script type="text/javascript">
-		let buttonPressed;
-		function redirect(buttonPressed) {
-			if (buttonPressed == null) {
-			}
-			else {
-				document.getElementById("redirect").content = "0; url=" + buttonPressed + "/index.html";
-			}
-		}
-
 const ball = {
   x: 400,
   y: 300,
@@ -179,7 +171,7 @@ setInterval(draw, 100);  // call `drawCanvas` every 100 ms
 	</div>
 	<div class="site">
 		<canvas id="canvas" width="800" height="600"></canvas>
-		<p id="score">Something went wrong and stuff didnt load? Thats probably why you are currently seeing this message!</p>
+		<p id="score">You are currently reading this message because something seems to have gone wrong.</p>
 	</div>
   </body>
 </html>
