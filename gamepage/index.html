@@ -112,6 +112,7 @@ const draw = () => {
 	ball.dx = -ball.dx;
     score.player1 ++;
   }
+  
   if (ball.x + ball.width <= 0 || (ball.x <= player1.x && (ball.y + ball.height >= canvas.height || ball.y <= 0 )))
   {
     ball.x = 400;
@@ -120,7 +121,14 @@ const draw = () => {
 	ball.dx = -ball.dx;
     score.player2 ++;
   }
+  
+    if ((ball.x > (player1.x + player1.width) || ball.x < player2.x) && (ball.y <= 0 || (ball.y + ball.height) >= canvas.height))
+  {
+  ball.dy = -ball.dy;
+  }
+  
   document.getElementById("score").innerHTML = `Score: player1 ${score.player1} /  player2 ${score.player2}`;
+  
 }
 
 // drawLine(ctx, [x1, y1], [x2, y2], 'green', 2)
