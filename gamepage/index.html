@@ -3,7 +3,7 @@
 	<head>
 		<script src="../javascript/func.js"></script>
 		<link rel="stylesheet" href="../styles/style.css"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8"/>
 		<script type="text/javascript">
 const ball = {
   x: 400,
@@ -39,10 +39,6 @@ const score = {
 const ballAngle = ball.dy;
 const moveSpeed = 10;
 
-
-const onmousedown = (event) => {
-  document.getElementById("info").innerHTML = `clicked on ${event.clientX} / ${event.clientY}`;
-}
 const onkeydown = (event) => {
   if (event.keyCode == 87)
   player1.y -= moveSpeed;
@@ -75,75 +71,54 @@ const draw = () => {
   ctx.fillStyle = player2.background;
   ctx.fillRect(player2.x, player2.y, player2.width, player2.height);
 
-  // green square without fill color
-  //ctx.beginPath();
-  //ctx.lineWidth = 2;
-  //ctx.strokeStyle = square.color;
-  //ctx.rect(square.x, square.y, square.width, square.height);
-  //ctx.stroke()
-
-  //drawLine( ctx, [10, 10], [100, 150], 'green', 5);
-
   // move squares
   ball.x = ball.x + ball.dx;
   ball.y = ball.y + ball.dy;
-  //square.x = square.x + square.dx;
-  //square.y = square.y + square.dy;
 
+  // ball-paddle collission
   if ( (ball.x == player1.x && (ball.y >= player1.y || ball.y + ball.height >= player1.y) && (ball.y + ball.height <= player1.y + player1.height || ball.y <= player1.y + player1.height)) || ( ball.x + ball.width == player2.x && (ball.y >= player2.y || ball.y + ball.height >= player2.y) && (ball.y + ball.height <= player2.y + player2.height || ball.y <= player2.y + player2.height)))
   {
 	ball.dx = -ball.dx;
-	if ( ball.x > canvas.width / 2 )
-	{
-		ball.dy = ballAngle * -((((player2.y + (player2.height / 2)) - (ball.y + (ball.height / 2)))) / 5);
-	}
-	if ( ball.x < canvas.width / 2)
-	{
-		ball.dy = ballAngle * -((((player1.y + (player1.height / 2)) - (ball.y + (ball.height / 2)))) / 5);
-	}
+	// ball y angle change for right paddle
+	  if ( ball.x > canvas.width / 2 )
+	  {
+		  ball.dy = ballAngle * -((((player2.y + (player2.height / 2)) - (ball.y + (ball.height / 2)))) / 5);
+	  }
+	// ball y angle change for left paddle
+	  if ( ball.x < canvas.width / 2)
+	  {
+		  ball.dy = ballAngle * -((((player1.y + (player1.height / 2)) - (ball.y + (ball.height / 2)))) / 5);
+	  }
   }
-  //if (ball.x + ball.width >= canvas.width || ball.y + ball.height >= canvas.height || ball.x <= 0 || ball.y <= 0 )
+
+  // ball out of bounds left half
   if (ball.x >= canvas.width || (ball.x + ball.width >= player2.x + player2.width && (ball.y + ball.height >= canvas.height || ball.y <= 0 )))
   {
     ball.x = 400;
     ball.y = 300;
-	ball.dy = ballAngle;
-	ball.dx = -ball.dx;
+	  ball.dy = ballAngle;
+	  ball.dx = -ball.dx;
     score.player1 ++;
   }
 
+  // ball out of bounds right half
   if (ball.x + ball.width <= 0 || (ball.x <= player1.x && (ball.y + ball.height >= canvas.height || ball.y <= 0 )))
   {
     ball.x = 400;
     ball.y = 300;
-	ball.dy = -ballAngle;
-	ball.dx = -ball.dx;
+	  ball.dy = -ballAngle;
+  	ball.dx = -ball.dx;
     score.player2 ++;
   }
 
-    if ((ball.x > (player1.x + player1.width) || ball.x < player2.x) && (ball.y <= 0 || (ball.y + ball.height) >= canvas.height))
+  // ball collides with top or bottom of canvas in playfield
+  if ((ball.x > (player1.x + player1.width) || ball.x < player2.x) && (ball.y <= 0 || (ball.y + ball.height) >= canvas.height))
   {
-  ball.dy = -ball.dy;
+    ball.dy = -ball.dy;
   }
 
   document.getElementById("score").innerHTML = `Score: player1 ${score.player1} /  player2 ${score.player2}`;
 
-}
-
-// drawLine(ctx, [x1, y1], [x2, y2], 'green', 2)
-const drawLine = (ctx, begin, end, stroke = 'black', width = 1) => {
-  if (stroke) {
-    ctx.strokeStyle = stroke;
-  }
-
-  if (width) {
-    ctx.lineWidth = width;
-  }
-
-  ctx.beginPath();
-  ctx.moveTo(...begin);
-  ctx.lineTo(...end);
-  ctx.stroke();
 }
 
 window.addEventListener("mousedown", onmousedown); // call `onmousedown` when the mouse is clicked
