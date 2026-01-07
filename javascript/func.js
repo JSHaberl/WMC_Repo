@@ -3,6 +3,6 @@ function redirect(buttonPressed) {
 	if (buttonPressed == null) {
 	}
 	else {
-		document.getElementById("redirect").content = "0; url=" + buttonPressed + "/index.html";
+		window.location.replace(buttonPressed + "/index.html");
 	}
 }
