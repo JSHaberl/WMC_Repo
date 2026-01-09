@@ -38,6 +38,7 @@ const score = {
 
 const ballAngle = ball.dy;
 const moveSpeed = 10;
+let ballSpeed = ball.dx;
 
 const onkeydown = (event) => {
   if (event.keyCode == 87)
@@ -72,22 +73,26 @@ const draw = () => {
   ctx.fillRect(player2.x, player2.y, player2.width, player2.height);
 
   // move squares
-  ball.x = ball.x + ball.dx;
+  ball.x = ball.x + ballSpeed;
   ball.y = ball.y + ball.dy;
 
+  
+
   // ball-paddle collission
-  if ( (ball.x == player1.x && (ball.y >= player1.y || ball.y + ball.height >= player1.y) && (ball.y + ball.height <= player1.y + player1.height || ball.y <= player1.y + player1.height)) || ( ball.x + ball.width == player2.x && (ball.y >= player2.y || ball.y + ball.height >= player2.y) && (ball.y + ball.height <= player2.y + player2.height || ball.y <= player2.y + player2.height)))
+  if ( (ball.x <= player1.x + player1.width && ball.x + ball.width >= player1.x && (ball.y >= player1.y || ball.y + ball.height >= player1.y) && (ball.y + ball.height <= player1.y + player1.height || ball.y <= player1.y + player1.height)) || ( ball.x + ball.width >= player2.x && ball.x <= player2.x + player2.width && (ball.y >= player2.y || ball.y + ball.height >= player2.y) && (ball.y + ball.height <= player2.y + player2.height || ball.y <= player2.y + player2.height)))
   {
-	  ball.dx = -ball.dx;
+	  ballSpeed = -(ballSpeed * 1.1);
 
 	// ball y angle change for right paddle
 	  if ( ball.x > canvas.width / 2 )
 	  {
+		  ball.x = ball.x + (player2.x - (ball.x + ball.width));
 		  ball.dy = ballAngle * -((((player2.y + (player2.height / 2)) - (ball.y + (ball.height / 2)))) / 5);
 	  }
 	// ball y angle change for left paddle
 	  if ( ball.x < canvas.width / 2)
 	  {
+		  ball.x = ball.x - (ball.x - (player1.x + player1.width));
 		  ball.dy = ballAngle * -((((player1.y + (player1.height / 2)) - (ball.y + (ball.height / 2)))) / 5);
 	  }
   }
@@ -97,8 +102,8 @@ const draw = () => {
   {
     ball.x = 400;
     ball.y = 300;
-	  ball.dy = ballAngle;
-	  ball.dx = -ball.dx;
+	ball.dy = ballAngle;
+	ballSpeed = -ball.dx;
     score.player1 ++;
   }
 
@@ -108,7 +113,7 @@ const draw = () => {
     ball.x = 400;
     ball.y = 300;
 	  ball.dy = -ballAngle;
-  	ball.dx = -ball.dx;
+  	ballSpeed = -ball.dx;
     score.player2 ++;
   }
 
