@@ -15,7 +15,7 @@
  a:hover {
   color: rgb(0, 255, 0)
  }
- 
+
  .sidebar {
   padding: 0;
   width: 200px;
@@ -35,13 +35,13 @@
  .sidebar ul {
 	margin-top: 100px;
  }
- 
+
  .buttonList {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
  }
- 
+
 div.site {
 	margin-left: 200px;
 	color: green;
