@@ -1,8 +1,8 @@
 let buttonPressed;
-function redirect(buttonPressed) {
-	if (buttonPressed == null) {
+function redirect(pressed) {
+	if (pressed == null) {
 	}
 	else {
-		window.location.replace(buttonPressed + "/index.html");
+		window.location.replace(pressed + "/index.html");
 	}
 }
