@@ -1,7 +1,7 @@
 const ball = {
   x: 400,
   y: 300,
-  dx: 10,
+  dx: 5,
   dy: 1,
   width: 20,
   height: 20,
@@ -31,7 +31,8 @@ const score = {
 
 const ballAngle = ball.dy;
 const moveSpeed = 10;
-let ballSpeed = ball.dx;
+let ballStartSpeed = 10;
+let ballSpeed = ballStartSpeed;
 
 const onkeydown = (event) => {
   if (event.keyCode == 87)
@@ -48,7 +49,7 @@ const centerY = (entity) => {
   return (entity.y + (entity.height / 2));
 }
 const draw = () => {
-  const canvas = document.getElementById("canvas")
+  const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d", {alpha: false}); // 2d context for painting
 
   // canvas background fill color
@@ -66,28 +67,31 @@ const draw = () => {
   // player2
   ctx.fillStyle = player2.background;
   ctx.fillRect(player2.x, player2.y, player2.width, player2.height);
-
+  
   // move squares
   ball.x = ball.x + ballSpeed;
   ball.y = ball.y + ball.dy;
 
-  
-
   // ball-paddle collission
-  if ( (ball.x <= player1.x + player1.width && ball.x + ball.width >= player1.x + ballSpeed && (ball.y >= player1.y || ball.y + ball.height >= player1.y) && (ball.y + ball.height <= player1.y + player1.height || ball.y <= player1.y + player1.height)) || ( ball.x + ball.width >= player2.x && ball.x <= player2.x + player2.width + ballSpeed && (ball.y >= player2.y || ball.y + ball.height >= player2.y) && (ball.y + ball.height <= player2.y + player2.height || ball.y <= player2.y + player2.height)))
+  if ( (ball.x <= player1.x + player1.width && ball.x + ball.width >= player1.x + ballSpeed / 1.1 && (ball.y >= player1.y || ball.y + ball.height >= player1.y) && (ball.y + ball.height <= player1.y + player1.height || ball.y <= player1.y + player1.height)) || ( ball.x + ball.width >= player2.x && ball.x <= player2.x + player2.width + ballSpeed / 1.1 && (ball.y >= player2.y || ball.y + ball.height >= player2.y) && (ball.y + ball.height <= player2.y + player2.height || ball.y <= player2.y + player2.height)))
   {
-	  ballSpeed = -(ballSpeed * 1.1);
+	ballSpeed = -(ballSpeed)
+	ballStartSpeed = -(ballStartSpeed)
+	ball.dx = -(ball.dx)
+	  if (ballSpeed <= 45 && ballSpeed >= -45) {
+		ballSpeed = ballSpeed + ball.dx;
+	  }
 
 	// ball y angle change for right paddle
 	  if ( ball.x > canvas.width / 2 )
 	  {
-		  ball.x = ball.x + (player2.x - (ball.x + ball.width));
+		  ball.x = player2.x - ball.width;
 		  ball.dy = ballAngle * -(((centerY(player2) - centerY(ball))) / 5);
 	  }
 	// ball y angle change for left paddle
 	  if ( ball.x < canvas.width / 2)
 	  {
-		  ball.x = ball.x - (ball.x - (player1.x + player1.width));
+		  ball.x = player1.x + player1.width;
 		  ball.dy = ballAngle * -(((centerY(player1) - centerY(ball))) / 5);
 	  }
   }
@@ -98,7 +102,7 @@ const draw = () => {
     ball.x = 400;
     ball.y = 300;
 	ball.dy = ballAngle;
-	ballSpeed = -ball.dx;
+	ballSpeed = ballStartSpeed;
     score.player1 ++;
   }
 
@@ -107,8 +111,8 @@ const draw = () => {
   {
     ball.x = 400;
     ball.y = 300;
-	  ball.dy = -ballAngle;
-  	ballSpeed = -ball.dx;
+	 ball.dy = -ballAngle;
+  	ballSpeed = ballStartSpeed;
     score.player2 ++;
   }
 
@@ -117,16 +121,14 @@ const draw = () => {
   {
     ball.dy = -ball.dy;
   }
-
+  
   ctx.font = "20px Georgia";
   ctx.strokeStyle = "green";
   ctx.strokeText(`Player1: ${score.player1}`, 0, 20);
   ctx.strokeStyle = "blue";
   ctx.strokeText(`Player2: ${score.player2}`, 685, 20);
-
 }
 
 window.addEventListener("mousedown", onmousedown); // call `onmousedown` when the mouse is clicked
 window.addEventListener("keydown", onkeydown);  // call `onkeydown` when a key is pressed
-
-setInterval(draw, 100);  // call `drawCanvas` every 100 ms
+setInterval(draw, 100); // call `drawCanvas` every 100 ms
