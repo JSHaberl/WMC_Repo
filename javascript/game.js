@@ -44,7 +44,9 @@ const onkeydown = (event) => {
   player2.y += moveSpeed;
 }
 
-
+const centerY = (entity) => {
+  return (entity.y + (entity.height / 2));
+}
 const draw = () => {
   const canvas = document.getElementById("canvas")
   const ctx = canvas.getContext("2d", {alpha: false}); // 2d context for painting
@@ -72,7 +74,7 @@ const draw = () => {
   
 
   // ball-paddle collission
-  if ( (ball.x <= player1.x + player1.width && ball.x + ball.width >= player1.x && (ball.y >= player1.y || ball.y + ball.height >= player1.y) && (ball.y + ball.height <= player1.y + player1.height || ball.y <= player1.y + player1.height)) || ( ball.x + ball.width >= player2.x && ball.x <= player2.x + player2.width && (ball.y >= player2.y || ball.y + ball.height >= player2.y) && (ball.y + ball.height <= player2.y + player2.height || ball.y <= player2.y + player2.height)))
+  if ( (ball.x <= player1.x + player1.width && ball.x + ball.width >= player1.x + ballSpeed && (ball.y >= player1.y || ball.y + ball.height >= player1.y) && (ball.y + ball.height <= player1.y + player1.height || ball.y <= player1.y + player1.height)) || ( ball.x + ball.width >= player2.x && ball.x <= player2.x + player2.width + ballSpeed && (ball.y >= player2.y || ball.y + ball.height >= player2.y) && (ball.y + ball.height <= player2.y + player2.height || ball.y <= player2.y + player2.height)))
   {
 	  ballSpeed = -(ballSpeed * 1.1);
 
@@ -80,13 +82,13 @@ const draw = () => {
 	  if ( ball.x > canvas.width / 2 )
 	  {
 		  ball.x = ball.x + (player2.x - (ball.x + ball.width));
-		  ball.dy = ballAngle * -((((player2.y + (player2.height / 2)) - (ball.y + (ball.height / 2)))) / 5);
+		  ball.dy = ballAngle * -(((centerY(player2) - centerY(ball))) / 5);
 	  }
 	// ball y angle change for left paddle
 	  if ( ball.x < canvas.width / 2)
 	  {
 		  ball.x = ball.x - (ball.x - (player1.x + player1.width));
-		  ball.dy = ballAngle * -((((player1.y + (player1.height / 2)) - (ball.y + (ball.height / 2)))) / 5);
+		  ball.dy = ballAngle * -(((centerY(player1) - centerY(ball))) / 5);
 	  }
   }
 
