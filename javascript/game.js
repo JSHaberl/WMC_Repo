@@ -29,6 +29,7 @@ const score = {
   player2: 0,
 }
 
+let gameRunning = true;
 const ballAngle = ball.dy;
 const moveSpeed = 10;
 let ballStartSpeed = 10;
@@ -43,6 +44,8 @@ const onkeydown = (event) => {
   player2.y -= moveSpeed;
   if (event.keyCode == 40)
   player2.y += moveSpeed;
+  if (event.keyCode == 32)
+  gameRunning = !(gameRunning);
 }
 
 const centerY = (entity) => {
@@ -51,7 +54,7 @@ const centerY = (entity) => {
 const draw = () => {
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d", {alpha: false}); // 2d context for painting
-
+if (gameRunning) {
   // canvas background fill color
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -127,6 +130,7 @@ const draw = () => {
   ctx.strokeText(`Player1: ${score.player1}`, 0, 20);
   ctx.strokeStyle = "blue";
   ctx.strokeText(`Player2: ${score.player2}`, 685, 20);
+	}
 }
 
 window.addEventListener("mousedown", onmousedown); // call `onmousedown` when the mouse is clicked
